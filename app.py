@@ -26,8 +26,11 @@ def study_image():
     # this is content of the message(data) you are sending to clarifai
     data = {"inputs": [{"data": {"image": {"url": image_url}}}]}
 
-    print(requests.post(api_url, headers=headers, data=json.dumps(data)))
-    return render_template('home.html', results="No results yet :(")
+    response=requests.post(api_url, headers=headers, data=json.dumps(data))
+    response_dict=json.loads(response.content)
+    return render_template('home.html', results=response_dict)
+
+    print(data)
 
 if __name__ == '__main__':
     app.run(debug=True)
